@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimal React App</title>
+</head>
+<body>
+    <div>
+        <p>Principal loan amount</p>
+        <input id="loan-amount"/>
+    </div>
+    <div>
+        <p>Interest Rate</p>
+        <input id="interest-rate"/>%
+    </div>
+    <div>
+        <p>Length of loan</p>
+        <input id="length-of-loan"/>Years
+    </div>
+    <div>
+        <button id="calculate">Calculate</button>
+    </div>
+    <p id="monthly-payment"></p>
+    <script>
+        const loanAmountInput = document.getElementById('loan-amount');
+        const interestRateInput = document.getElementById('interest-rate');
+        const lengthOfLoanInput = document.getElementById('length-of-loan');
+        const calculateButton = document.getElementById('calculate');
+        const monthlyPaymentParagraph = document.getElementById('monthly-payment');
+        let loanAmount = 0;
+        let interestRate = 0;
+        let lengthOfLoan = 0;
+        let monthlyPayment = 0;
+
+        loanAmountInput.addEventListener('input', (event) => {
+            loanAmount = event.target.value;
+        });
+        
+        interestRateInput.addEventListener('input', (event) => {
+            interestRate = event.target.value / 100 / 12;
+            console.log(interestRate)
+        });
+        
+        lengthOfLoanInput.addEventListener('input', (event) => {
+            lengthOfLoan = event.target.value * 12;
+        });
+        
+        calculateButton.addEventListener('click', () => {
+            // P(r(1+r)^n/((1+r)^n)-1))
+            monthlyPayment = loanAmount * (interestRate * Math.pow(1 + interestRate, lengthOfLoan) / (Math.pow(1 + interestRate, lengthOfLoan) - 1));
+            
+            monthlyPaymentParagraph.innerHTML = `Your monthly mortgage payment will be ${monthlyPayment}`;
+            console.log('calculate');
+        });
+    </script>
+</body>
+</html>
